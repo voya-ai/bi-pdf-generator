@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  hotelrepository:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: ./env/dev.env
+    ports:
+    - "5000:5000"
+  redis:
+    image: "redis:3"

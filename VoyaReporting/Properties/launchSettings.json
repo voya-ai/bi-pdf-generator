@@ -10,16 +10,26 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchBrowser": false,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AWSS3_BUCKETNAME": "",
+        "AWSS3_ACCESSKEYID": "",
+        "AWSS3_SECRETACCESSKEY": "",
+        "REPORTINGCLOUD_USERNAME": "",
+        "REPORTINGCLOUD_PASSWORD": "",
+        "DOMO_USERNAME": "",
+        "DOMO_PASSWORD": "",
+        "MONGO_CONNECTIONSTRING": "",
+        "MONGO_DBNAME": "",
+        "REDIS_HOST": "",
+        "REDIS_PORT": "",
+        "REDIS_ENABLECACHING": ""
       }
     },
     "VoyaReporting": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -1,0 +1,11 @@
+image: microsoft/dotnet:1.1-sdk
+
+pipelines:
+  default:
+    - step:
+        script:
+          - dotnet restore VoyaReporting
+          - dotnet build VoyaReporting
+          - dotnet restore VoyaReporting.Tests
+          - cd VoyaReporting.Tests
+          - dotnet test

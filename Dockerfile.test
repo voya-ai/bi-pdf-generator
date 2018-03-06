@@ -1,0 +1,11 @@
+FROM microsoft/dotnet:1.1-sdk
+
+COPY VoyaReporting /app/VoyaReporting
+WORKDIR /app/VoyaReporting
+RUN ["dotnet", "restore"]
+
+COPY VoyaReporting.Tests /app/VoyaReporting.Tests
+WORKDIR /app/VoyaReporting.Tests
+RUN ["dotnet", "restore"]
+
+ENTRYPOINT ["dotnet", "test"]

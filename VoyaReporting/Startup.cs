@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using VoyaReporting.Repositories;
+using VoyaReporting.Services;
 
 namespace VoyaReporting
 {
@@ -29,6 +31,30 @@ namespace VoyaReporting
         {
             // Add framework services.
             services.AddMvc();
+            services.AddCors();
+
+            // Repositories
+            services.AddSingleton<IReportingCloudRepository, ReportingCloudRepository>();
+            services.AddSingleton<IDomoRepository, DomoRepository>();
+            services.AddSingleton<IMongoReportRepository, MongoReportRepository>();
+            services.AddSingleton<IMongoReportGenerationRepository, MongoReportGenerationRepository>();
+            services.AddSingleton<IDomoCache, DomoCache>();
+
+            // Services
+            services.AddSingleton<IS3Service, S3Service>();
+            services.AddSingleton<IDomoDataGroupingService, DomoDataGroupingService>();
+            services.AddSingleton<IReportGenerationService, ReportGenerationService>();
+            services.AddSingleton<DomoService, DomoService>();
+            services.AddSingleton<CachedDomoService, CachedDomoService>();
+            services.AddSingleton<IDomoService>((provider) =>
+            {
+                if(Environment.GetEnvironmentVariable("REDIS_ENABLECACHING") != "true")
+                {
+                    return provider.GetRequiredService<DomoService>();
+                }
+
+                return provider.GetRequiredService<CachedDomoService>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +62,8 @@ namespace VoyaReporting
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseMvc();
         }
