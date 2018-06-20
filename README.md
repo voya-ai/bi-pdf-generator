@@ -1,4 +1,6 @@
-# VoyaReportingFrontend
+# BI PDF Generator
+
+Built on Domo and Reporting Cloud.
 
 ## Configuration
 
